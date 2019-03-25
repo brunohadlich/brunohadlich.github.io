@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Learning to Compute SQRT Manually
+title: Learning to compute SQRT manually
 ---
 
 This post has the objective of explaining the solution I developed for a problem designed by a recruitment company recently,
