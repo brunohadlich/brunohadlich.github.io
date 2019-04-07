@@ -32,9 +32,9 @@ Execute "run" and something like "Breakpoint 1, 0x00005555555545fe in main ()" w
 
 Now all you need to do is execute "disassemble <function_you_look_for>", examples:
 
-disassemble printf\
-disassemble open\
-disassemble close\
+disassemble printf
+disassemble open
+disassemble close
 disassemble free
 
 Here is a step by step:
