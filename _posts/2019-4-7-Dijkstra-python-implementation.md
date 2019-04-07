@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Python implementation of Dijkstra algorihthm!
+title: Python implementation of Dijkstra algorihthm
 ---
 
 When I was trying to implement Dijkstra algorithm in Python from pseudocodes I found on websites like this one from Wikipedia.
