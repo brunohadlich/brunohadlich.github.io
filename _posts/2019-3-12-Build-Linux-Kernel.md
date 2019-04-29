@@ -31,7 +31,7 @@ git checkout tags/v5.0
 
 Copy your own Kernel Configuration file to guarantee your kernel will come with the drivers your computer uses.
 
-cp /boot/config-`uname -r`* .config
+cp /boot/config-\`uname -r\` .config
 
 Run menuconfig but do not change anything unless you know what is doing, save it and exit.
 
