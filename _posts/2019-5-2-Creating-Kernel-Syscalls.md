@@ -16,7 +16,7 @@ This will create a x64 syscall called teste with entry point __x64_sys_teste. No
 handle such syscall, for simplicity sake we will edit file kernel/exit.c that already has a bunch of syscall definitions, inside
 this file add:
 
-```C
+```c
 SYSCALL_DEFINE0(teste)
 {
        uint64_t rcs = 0;
@@ -29,7 +29,7 @@ This is all you have to do to create your own syscall, the one I wrote above wil
 and print it to dmesg, now all you have to do is compiling your kernel and reinstall it, after that reboot your machine and write
 the following C code to test your syscall:
 
-```C
+```c
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
