@@ -3,23 +3,9 @@ layout: post
 title: Implementing Logistic Regression in Python
 ---
 
-This post has the intention of being a consultation base for those who need a Logistic Regression implementation that has been previously
-tested against a reliable framework. Below is the code and if you have a good knowledge of python you can maybe understand how the
-algorithm works by reading the code but this is not the purpose of this post, if you want to first understand the steps that compound this
-algorithm I really recommend you to take [Andrew NG](https://www.coursera.org/instructor/andrewng)
-[Machine Learning](https://www.coursera.org/learn/machine-learning) classes. The code presented below was developed by me, I based its
-development on Andrew's Machine Learning course which primary programming language is Octave and decided to re-implement the algorithm in
-python. When starting to read the code you may think that I am using libraries like pandas and sickit learn but that is only for data
-cleaning and later comparison between a known framework like scikit learn and my implementation. In main scope there are two function
-calls that better explain this, <strong><em>manual_solution()</strong></em> and <strong><em>scikit_learn_solution()</strong></em>, the
-first one is completely written by me and the second one uses scikit learn, both of them use
-[titanic passengers dataset](https://www.kaggle.com/lcqueiroz/titanic-passengers-dataset/data), even though you will find three csv files
-only train.csv was used and then splitted in training set and test set. Before executing the code please make sure you are using python3 as
-I used Python 3.7.3 during development and do not forget to install pandas and scikit learn with pip,
-<strong>pip3 install pandas scikit-learn</strong>, after executing the code with <strong>python3 logistic_regression.py</strong> you will
-see an output similar to:
+This post has the intention of being a consultation base for those who need a Logistic Regression implementation that has been previously tested against a reliable framework. Below is the code and if you have a good knowledge of python you can maybe understand how the algorithm works by reading the code but this is not the purpose of this post, if you want to first understand the steps that compound this algorithm I really recommend you to take [Andrew NG](https://www.coursera.org/instructor/andrewng) [Machine Learning](https://www.coursera.org/learn/machine-learning) classes. The code presented below was developed by me, I based its development on Andrew's Machine Learning course which primary programming language is Octave and decided to re-implement the algorithm in python. When starting to read the code you may think that I am using libraries like pandas and sickit learn but that is only for data cleaning and later comparison between a known framework like scikit learn and my implementation. In main scope there are two function calls that better explain this, manual_solution() and scikit_learn_solution(), the first one is completely written by me and the second one uses scikit learn, both of them use [titanic passengers dataset](https://www.kaggle.com/lcqueiroz/titanic-passengers-dataset/data), even though you will find three csv files only train.csv was used and then splitted in training set and test set. Before executing the code please make sure you are using python3 as I used Python 3.7.3 during development and do not forget to install pandas and scikit learn with pip, "pip3 install pandas scikit-learn", after executing the code with "python3 logistic_regression.py" you will see an output similar to:
 
-```console
+``` console
 bruno@bruno-laptop:~/git/Programming-Studies/machine_learning/logistic_regression$ python3 logistic_regression.py
 
 Processing manual solution:
@@ -59,11 +45,11 @@ bruno@bruno-laptop:~/git/Programming-Studies/machine_learning/logistic_regressio
 
 As you can see manual solution took 77 seconds against scikit learn 0.09 seconds, approximately 818 times longer, fortunately the
 accuracy of both solutions was the same 0.8202247191011236. I was surprised when realized the exact same accuracy for both solutions but
-that was achieved only after tuning the parameters of the function <strong><em>gradient_descent()</strong></em> using a limit of 10000
-iterations, alpha equals to 0.01 and a threshold of convergence of 0.000001 between iterations. I expect this post to be useful, below is
-the code and thank you for your time.
+that was achieved only after tuning the parameters of the function gradient_descent() using a limit of 10000 iterations, alpha equals to
+0.01 and a threshold of convergence of 0.000001 between iterations. I expect this post to be useful, below is the code and thank you for
+your time.
 
-```python3
+``` python
 import pandas as pd
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
