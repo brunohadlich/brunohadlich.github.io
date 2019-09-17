@@ -29,11 +29,11 @@ Select the tag that corresponds to the version you wish to build replacing v5.0 
 
 git checkout tags/v5.0
 
-Copy your own Kernel Configuration file to guarantee your kernel will come with the drivers your computer uses.
+Copy your own Kernel Configuration file to ensure your new kernel will keep the drivers your computer already uses.
 
-cp /boot/config-`uname -r`* .config
+sudo cp /boot/config-`uname -r`* .config
 
-Run menuconfig but do not change anything unless you know what is doing, save it and exit.
+Run menuconfig, do not change anything unless you know what you are doing, save it and exit.
 
 make menuconfig
 
