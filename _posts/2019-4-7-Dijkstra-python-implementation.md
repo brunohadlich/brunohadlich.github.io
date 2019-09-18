@@ -32,7 +32,7 @@ When I was trying to implement Dijkstra algorithm in Python from pseudocodes I f
 ```
 
 I run into a problem with Priority Queues in which a function called decrease_priority is called, the problem is that Python does
-not have a default library with a priority queue implementation that provides such feature, so to work around this I create a
+not have a default library with a priority queue implementation that provides such feature, so to work around this I created a
 list that will keep track of vertexes that have already been traveled, in the example below it is "vertex_in_priority_queue",
 in each iteration I check if the element that was popped from the queue "priority_queue_sorted_by_distance" has been traveled
 in "vertex_in_priority_queue", if it has I simply ignore it and go to the next iteration, if not I mark it as traveled and make
