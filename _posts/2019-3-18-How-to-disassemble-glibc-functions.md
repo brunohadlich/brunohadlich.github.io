@@ -12,7 +12,7 @@ int main() {
 ```
 After that compile it with "gcc main.c -o main".
 
-Now if you run "ldd main" it is possible to see that main program requires libc, in your system it will probably be at /lib/x86_64-linux-gnu/.
+Now if you run "ldd main" will see that main program requires libc, in your system it will probably be at /lib/x86_64-linux-gnu/.
 
 My output:
 
@@ -24,9 +24,9 @@ bruno@bruno-laptop:~/git/disassemble_glibc$ ldd main
 bruno@bruno-laptop:~/git/disassemble_glibc$
 ```
 
-Now to finally see the disassembled functions you will need to run gdb debugger passing your program as argument, "gdb main".
+Now to finally see the disassembled functions run gdb debugger passing your program as argument, "gdb main".
 
-After gdb is loaded you have to put a breakpoint at main function of your program with "break main".
+After gdb is loaded put a breakpoint at main function with "break main".
 
 Execute "run" and something like "Breakpoint 1, 0x00005555555545fe in main ()" will be displayed.
 
