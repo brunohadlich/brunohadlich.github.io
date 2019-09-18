@@ -31,7 +31,7 @@ git checkout tags/v5.0
 
 Copy your own Kernel Configuration file to ensure your new kernel will keep the drivers your computer already uses.
 
-sudo cp /boot/config-`uname -r`* .config
+sudo cp /boot/config-\`uname -r\` .config
 
 Run menuconfig, do not change anything unless you know what you are doing, save it and exit.
 
@@ -39,6 +39,4 @@ make menuconfig
 
 Run the following commands to build, install modules and then install the kernel itself. The example below is using 4 threads, in case you computer has a different number of threads you can change this value.
 
-sudo make -j 4
-sudo make modules_install -j 4
-sudo make install -j 4
+sudo make -j 4 && sudo make modules_install -j 4 && sudo make install -j 4
