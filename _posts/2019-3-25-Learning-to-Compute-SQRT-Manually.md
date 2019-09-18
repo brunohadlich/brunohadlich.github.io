@@ -6,7 +6,7 @@ title: Learning to compute SQRT manually
 This post has the objective of explaining the solution I developed for a problem designed by a recruitment company recently,
 basically the problem explained me one possible way of calculating square root by an iteractive method and then asked for
 such method to be implemented in the language of my preference, I chose python for the sake of simplicity. Here is the code I wrote with
-comments to make understanding easier:
+comments:
 
 ```python
 def sqrt(x):
