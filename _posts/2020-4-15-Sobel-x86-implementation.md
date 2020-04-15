@@ -9,7 +9,7 @@ reasoning. With this is mind I decided to implement an small algorithm called so
 choice because it is small and easy to understand, the idea behind this algorithm is putting in evidence the borders of an
 image, so I will start by presenting the algorithm written in C.
 
-```C
+```c
 volatile void *sobel(uint8_t *input, uint8_t *output, uint16_t rows, uint16_t cols) {
   int kernel_x[] = {
     -1, 0, 1,
@@ -42,7 +42,7 @@ volatile void *sobel(uint8_t *input, uint8_t *output, uint16_t rows, uint16_t co
 
 This is the assembly version.
 
-```asm
+```nasm
 				.global sobel
 
 				.text
