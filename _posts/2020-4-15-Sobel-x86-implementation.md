@@ -43,154 +43,154 @@ volatile void *sobel(uint8_t *input, uint8_t *output, uint16_t rows, uint16_t co
 This is the assembly version.
 
 ```nasm
-				.global sobel
+	.global sobel
 
-				.text
+	.text
 sobel:
-				pushq %rbp
-				movq %rsp, %rbp
+	pushq %rbp
+	movq %rsp, %rbp
 
-				pushq %rax
-				pushq %rbx
-				pushq %rcx
-				pushq %rsi
+	pushq %rax
+	pushq %rbx
+	pushq %rcx
+	pushq %rsi
 
-				movq %rdi, input
-				movq %rsi, output
-				movw %dx,  rows
-				movw %cx,  cols
+	movq %rdi, input
+	movq %rsi, output
+	movw %dx,  rows
+	movw %cx,  cols
 
-				decw cols
-				decw rows
+	decw cols
+	decw rows
 
-				r0:
-				movl $1, r
-				r1:
+	r0:
+	movl $1, r
+	r1:
 
-				c0:
-				movl $1, c
-				c1:
+	c0:
+	movl $1, c
+	c1:
 
-				movl $0, gx
-				movl $0, gy
+	movl $0, gx
+	movl $0, gy
 
-				a0:
-				movl $0, a
-				a1:
+	a0:
+	movl $0, a
+	a1:
 
-				b0:
-				movl $0, b
-				b1:
+	b0:
+	movl $0, b
+	b1:
 
-				//int kernel_idx = a * 3 + b;
-				movl $3, %eax
-				mull a
-				addl b, %eax
-				movl %eax, kernel_idx
-				//int kernel_idx = a * 3 + b;
+	//int kernel_idx = a * 3 + b;
+	movl $3, %eax
+	mull a
+	addl b, %eax
+	movl %eax, kernel_idx
+	//int kernel_idx = a * 3 + b;
 
-				//int input_idx = ((r - 1 + a) * cols + c - 1) + b;
-				movl r, %eax
-				decl %eax
-				addl a, %eax
-				movl %eax, %ecx
-				movzwl cols, %ebx
-				mull %ebx
-				addl %ecx, %eax
-				addl c, %eax
-				decl %eax
-				addl b, %eax
-				movl %eax, input_idx
-				//int input_idx = ((r - 1 + a) * cols + c - 1) + b;
+	//int input_idx = ((r - 1 + a) * cols + c - 1) + b;
+	movl r, %eax
+	decl %eax
+	addl a, %eax
+	movl %eax, %ecx
+	movzwl cols, %ebx
+	mull %ebx
+	addl %ecx, %eax
+	addl c, %eax
+	decl %eax
+	addl b, %eax
+	movl %eax, input_idx
+	//int input_idx = ((r - 1 + a) * cols + c - 1) + b;
 
-				//input_value = input[input_idx]
-				movq $0, %rsi
-				movl input_idx, %esi
-				movq input, %rbx
-				movzbl (%rbx, %rsi), %eax
-				movl %eax, input_value
-				//input_value = input[input_idx]
+	//input_value = input[input_idx]
+	movq $0, %rsi
+	movl input_idx, %esi
+	movq input, %rbx
+	movzbl (%rbx, %rsi), %eax
+	movl %eax, input_value
+	//input_value = input[input_idx]
 
-				//gx += input_value * kernel_x[kernel_idx] 
-				movq $0, %rsi
-				movl kernel_idx, %esi
-				movq $kernel_x, %rbx
-				movl (%rbx,%rsi,4), %eax
-				imull input_value, %eax
-				addl %eax, gx
-				//gx += input_value * kernel_x[kernel_idx]
+	//gx += input_value * kernel_x[kernel_idx] 
+	movq $0, %rsi
+	movl kernel_idx, %esi
+	movq $kernel_x, %rbx
+	movl (%rbx,%rsi,4), %eax
+	imull input_value, %eax
+	addl %eax, gx
+	//gx += input_value * kernel_x[kernel_idx]
 
-				//gy += input_value * kernel_y[kernel_idx]
-				movq $0, %rsi
-				movl kernel_idx, %esi
-				movq $kernel_y, %rbx
-				movl (%rbx,%rsi,4), %eax
-				imull input_value, %eax
-				addl %eax, gy
-				//gy += input_value * kernel_y[kernel_idx]
+	//gy += input_value * kernel_y[kernel_idx]
+	movq $0, %rsi
+	movl kernel_idx, %esi
+	movq $kernel_y, %rbx
+	movl (%rbx,%rsi,4), %eax
+	imull input_value, %eax
+	addl %eax, gy
+	//gy += input_value * kernel_y[kernel_idx]
 
-				incl b
-				cmpl $3, b
-				jl b1
+	incl b
+	cmpl $3, b
+	jl b1
 
-				incl a
-				cmpl $3, a
-				jl a1
+	incl a
+	cmpl $3, a
+	jl a1
 
-				//output[r * cols + c] = sqrt(gx * gx + gy * gy);
-				//gx * gx
-				movl gx, %eax
-				mull %eax
-				movl %eax, gx
-				//gy * gy
-				movl gy, %eax
-				mull %eax
-				//eax = gx * gx + gy * gy
-				addl gx, %eax
+	//output[r * cols + c] = sqrt(gx * gx + gy * gy);
+	//gx * gx
+	movl gx, %eax
+	mull %eax
+	movl %eax, gx
+	//gy * gy
+	movl gy, %eax
+	mull %eax
+	//eax = gx * gx + gy * gy
+	addl gx, %eax
 
-				//sqrt(gx * gx + gy * gy)
-				cvtsi2sd	%eax, %xmm0
-				sqrtsd		%xmm0, %xmm0
-				cvttsd2si	%xmm0, %ecx
+	//sqrt(gx * gx + gy * gy)
+	cvtsi2sd	%eax, %xmm0
+	sqrtsd		%xmm0, %xmm0
+	cvttsd2si	%xmm0, %ecx
 
-				//r * cols + c
-				movl r, %eax
-				movzwl cols, %ebx
-				mull %ebx
-				addl r, %eax
-				addl c, %eax
-				movq $0, %rsi
-				movl %eax, %esi
+	//r * cols + c
+	movl r, %eax
+	movzwl cols, %ebx
+	mull %ebx
+	addl r, %eax
+	addl c, %eax
+	movq $0, %rsi
+	movl %eax, %esi
 
-				//output[r * cols + c] = sqrt(gx * gx + gy * gy);
-				movq output, %rbx
-				movb %cl, (%rbx, %rsi)
+	//output[r * cols + c] = sqrt(gx * gx + gy * gy);
+	movq output, %rbx
+	movb %cl, (%rbx, %rsi)
 
-				incl c
-				movzwl cols, %ecx
-				cmpl %ecx, c
-				jl c1
+	incl c
+	movzwl cols, %ecx
+	cmpl %ecx, c
+	jl c1
 
-				incl r
-				movzwl rows, %ecx
-				cmpl %ecx, r
-				jl r1
+	incl r
+	movzwl rows, %ecx
+	cmpl %ecx, r
+	jl r1
 
-				popq %rsi
-				popq %rcx
-				popq %rbx
-				popq %rax
+	popq %rsi
+	popq %rcx
+	popq %rbx
+	popq %rax
 
-				movq %rbp, %rsp
-				popq %rbp
+	movq %rbp, %rsp
+	popq %rbp
 
-				ret
+	ret
 
-				.data
-kernel_x:			.long	-1, 0, 1, -2, 0, 2, -1, 0, 1
-kernel_y:			.long	-1, -2, -1, 0, 0, 0, 1, 2, 1
+	.data
+kernel_x:	.long	-1, 0, 1, -2, 0, 2, -1, 0, 1
+kernel_y:	.long	-1, -2, -1, 0, 0, 0, 1, 2, 1
 
-				.bss
+	.bss
 .lcomm input, 8
 .lcomm output, 8
 .lcomm rows, 2
@@ -210,13 +210,13 @@ Now I want to talk about some issues that I faced during the development, the fi
 they are splitted in two segments, data and bss, my first try was to put all variables into data segment and define them
 like:
 
-input: .quad</br>
-output: .quad</br>
-rows: .word</br>
-...</br>
-b: .long</br>
-gx: .long</br>
-gy: .long</br>
+input: .quad  
+output: .quad  
+rows: .word   
+...  
+b: .long  
+gx: .long  
+gy: .long  
 
 The issue is that as I was not defining a value for these variables, consequently the compiler assumed they all referred
 to the same memory position, it may sound absurd but it took me hours to understand that I should have defined my variables
@@ -234,6 +234,6 @@ code compiled with flag O3 is ~10x faster the the assembly I wrote. Now that I d
 working version, next step is to optimize it and make it faster by using more registers to reduce memory accesses, removing
 redundant code, maybe using loop unrolling and other kinds of optimization techniques.
 
-If you would like to test this code, clone the repo https://github.com/brunohadlich/image_processing_tests, run ```make```
+If you would like to test this code, clone the [repo](https://github.com/brunohadlich/image_processing_tests), run ```make```
 to generate 'main' executable or ```make asm``` to generate 'asm_main' executable. Both files when executed will read 
 images/Full_HD_1920x1080.bmp and generate the sobel output in images/img_mod.bmp based.
